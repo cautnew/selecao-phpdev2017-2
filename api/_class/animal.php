@@ -4,7 +4,8 @@ class Animal{
 	private $ani_var_nome;
 	private $ani_cha_vivo;
 	private $ani_dec_peso;
-	private $ani_var_raca;
+	private $rac_int_codigo;
+	private $prp_int_codigo;
 
 
 	public function getAni_int_codigo() {
@@ -39,12 +40,20 @@ class Animal{
 		$this->ani_dec_peso = $ani_dec_peso;
 	}
 
-	public function getAni_var_raca() {
-		return $this->ani_var_raca;
+	public function getRac_int_codigo() {
+		return $this->rac_int_codigo;
 	}
 
-	public function setAni_var_raca($ani_var_raca) {
-		$this->ani_var_raca = $ani_var_raca;
+	public function setRac_int_codigo($rac_int_codigo) {
+		$this->rac_int_codigo = $rac_int_codigo;
+	}
+
+	public function getPrp_int_codigo() {
+		return $this->prp_int_codigo;
+	}
+
+	public function setPrp_int_codigo($prp_int_codigo) {
+		$this->prp_int_codigo = $prp_int_codigo;
 	}
 
 }

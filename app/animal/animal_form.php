@@ -1,5 +1,6 @@
 <?php
 $form = new GForm();
+$conn = new GDbMysql();
 
 //<editor-fold desc="Header">
 $title = '<span class="acaoTitulo"></span>';
@@ -14,8 +15,25 @@ $htmlForm .= $form->addInput('text', 'ani_var_nome', 'Nome*', array('maxlength' 
 $htmlForm .= $form->addSelect('ani_cha_vivo', array('S' => 'Sim', 'N' => 'Não'), '', 'Vivo*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 $htmlForm .= $form->addInput('text', 'ani_dec_peso', 'Peso*', array('maxlength' => '100', 'validate' => 'required'));
-$htmlForm .= $form->addInput('text', 'ani_var_raca', 'Raça*', array('maxlength' => '100', 'validate' => 'required'));
+//$htmlForm .= $form->addInput('text', 'rac_int_codigo', 'Raça*', array('maxlength' => '100', 'validate' => 'required'));
 
+$conn->execute( "SELECT rac_int_codigo, rac_var_nome FROM `SELECAO_PHPDEV2017_2`.`RACA`;" );
+
+$raca = array();
+
+while( $conn->fetch() )
+    $raca[ $conn->res[ 0 ] ] = $conn->res[ 1 ];
+
+$htmlForm .= $form->addSelect('rac_int_codigo', $raca, '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
+
+$conn->execute( "SELECT prp_int_codigo, prp_var_nome FROM `SELECAO_PHPDEV2017_2`.`PROPRIETARIO`;" );
+
+$prp = array();
+
+while( $conn->fetch() )
+    $prp[ $conn->res[ 0 ] ] = $conn->res[ 1 ];
+
+$htmlForm .= $form->addSelect('prp_int_codigo', $prp, '', 'Proprietário*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
 $htmlForm .= '<div class="form-actions">';
 $htmlForm .= getBotoesAcao(true);

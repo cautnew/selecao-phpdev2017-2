@@ -343,6 +343,54 @@ END
 $$
 
 --
+-- Definition for procedure sp_animal_upd
+--
+DROP PROCEDURE IF EXISTS sp_animal_upd$$
+CREATE PROCEDURE sp_animal_upd(IN p_ani_int_codigo INT, IN p_ani_var_nome VARCHAR(50), IN p_ani_dec_peso DECIMAL(8,3), IN p_rac_int_codigo INT, IN p_prp_int_codigo INT, IN p_ani_cha_vivo CHAR(1), INOUT p_status BOOLEAN, INOUT p_msg TEXT, INOUT p_insert_id INT(11))
+  SQL SECURITY INVOKER
+  COMMENT 'Procedure de Update'
+BEGIN
+
+  DECLARE v_existe boolean;
+
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    SET p_status = FALSE;
+    SET p_msg = 'Erro ao executar o procedimento.';
+  END;
+
+  SET p_msg = '';
+  SET p_status = FALSE;
+
+  -- VALIDAÇÕES
+  IF p_ani_int_codigo IS NULL THEN
+    SET p_msg = concat(p_msg, 'Codigo não informado.<br />');
+  END IF;
+
+  IF p_msg = '' THEN
+
+    START TRANSACTION;
+
+    UPDATE animal set ani_int_codigo=p_ani_int_codigo,
+					  ani_var_nome=p_ani_var_nome,
+                      ani_dec_peso=p_ani_dec_peso,
+                      rac_int_codigo=p_rac_int_codigo,
+                      ani_var_raca=p_ani_var_raca,
+                      ani_cha_vivo);
+
+    COMMIT;
+
+    SET p_status = TRUE;
+    SET p_msg = 'Um registro foi atualizado com sucesso.';
+    SET p_insert_id = LAST_INSERT_ID();
+
+  END IF;
+
+END
+$$
+
+--
 -- Definition for procedure sp_usuario_del
 --
 DROP PROCEDURE IF EXISTS sp_usuario_del$$

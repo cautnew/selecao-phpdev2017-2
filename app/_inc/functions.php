@@ -68,7 +68,7 @@ function getBotaoAdicionar($id = 'p__btn_adicionar') {
 
 
 function validaCPF($cpf) {
-    // Verifiva se o número digitado contém todos os digitos
+    // Verifica se o número digitado contém todos os digitos
     $cpf = str_pad(preg_replace('/[^0-9]/i', '', $cpf), 11, '0', STR_PAD_LEFT);
 
     // Verifica se nenhuma das sequências abaixo foi digitada, caso seja, retorna falso
