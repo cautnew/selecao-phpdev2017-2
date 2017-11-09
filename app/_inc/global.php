@@ -21,7 +21,7 @@ if( !isset( $_SESSION[ 'LOG_INT_CODIGO' ] ) )
             }
         }
     }
-    define('URL_SYS', 'http://' . $_SERVER['SERVER_NAME'] . /*"/"*/"/simplesvet/app/" . $complementoPasta);
+    define('URL_SYS', 'http://' . $_SERVER['SERVER_NAME'] . "/"/*"/simplesvet/app/"*/ . $complementoPasta);
     define('ROOT_SYS', str_replace('_inc', '', dirname(__FILE__)));
 // --
 
