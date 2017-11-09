@@ -38,7 +38,7 @@ $htmlForm .= $form->addSelect('prp_int_codigo', prepArray( $conn ), '', 'Proprie
 $htmlForm .= $form->addInput('file', 'ani_img_perfil', 'Imagem do animal', null);
 
 $htmlForm .= "<p>Imagem atual: </p>";
-if( file_exists('../img/' . ) )
+if( file_exists('../img/' ) )
 {
     $htmlForm .= "<img src=\"../img/" .  . ".jpg\" width=\"200\">";
 }
