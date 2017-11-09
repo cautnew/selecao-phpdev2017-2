@@ -7,7 +7,7 @@ class UsuarioDao {
         $ret = array();
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("SELECT usu_int_codigo,usu_var_nome,usu_var_email,usu_cha_status,usu_dti_inclusao FROM vw_usuario WHERE usu_int_codigo = ? ", array("i", $usuario->getUsu_int_codigo()), true, MYSQL_ASSOC);
+            $mysql->execute("SELECT usu_int_codigo,usu_var_nome,usu_var_email, usu_cha_status,usu_dti_inclusao FROM usuario WHERE usu_int_codigo = ? ", array("i", $usuario->getUsu_int_codigo()), true, MYSQL_ASSOC);
             if ($mysql->fetch()) {
                 $ret = $mysql->res;
             }

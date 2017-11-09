@@ -25,7 +25,7 @@ if (!empty($ani_var_nome)) {
 
 try {
     if ($type == 'C') {
-        $query = "SELECT count(1) FROM vw_animal " . $filter->getWhere();
+        $query = "SELECT count(1) FROM animal " . $filter->getWhere();
         $param = $filter->getParam();
         $mysql->execute($query, $param);
         if ($mysql->fetch()) {
@@ -37,9 +37,8 @@ try {
         $filter->setOrder(array('ani_var_nome' => 'ASC'));
         $filter->setLimit($start, $rp);
 
-        $query = "SELECT ani_int_codigo, ani_var_nome, ani_var_vivo, ani_dec_peso, rac_var_nome, prp_var_nome FROM vw_animal " . $filter->getWhere();
+        $query = "SELECT ani_int_codigo, ani_var_nome,case ani_cha_vivo when 'S' then 'Sim' when 'N' then 'Não' end ani_var_vivo, ani_dec_peso, rac_var_nome, prp_var_nome FROM animal LEFT JOIN `raca` ON `animal`.`rac_int_codigo` = `raca`.`rac_int_codigo` LEFT JOIN `proprietario` ON `animal`.`prp_int_codigo` = `proprietario`.`prp_int_codigo` " . $filter->getWhere();
         $param = $filter->getParam();
-
         $mysql->execute($query, $param);
 
         if ($mysql->numRows() > 0) {
@@ -77,7 +76,6 @@ try {
         } else {
             $html .= '<div class="nenhumResultado">Nenhum resultado encontrado.</div>';
         }
-
         echo $html;
     }
 } catch (GDbException $exc) {

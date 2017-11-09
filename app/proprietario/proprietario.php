@@ -65,20 +65,20 @@ $footer->show();
             showForm('divForm', 'ins', 'Adicionar');
         });
         $(document).on('click', '.l__btn_editar, tr.linhaRegistro td:not([class~="acoes"])', function() {
-            var usu_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
+            var prp_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
 
             scrollTop();
-            selectLine(usu_int_codigo);
+            selectLine(prp_int_codigo);
 
-            loadForm(URL_API + 'proprietarios/' + usu_int_codigo, function(json) {
+            loadForm(URL_API + 'proprietarios/' + prp_int_codigo, function(json) {
                 showForm('divForm', 'upd', 'Editar');
             });
         });
         $(document).on('click', '.l__btn_excluir', function() {
-            var usu_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
+            var prp_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
 
             $.gDisplay.showYN("Quer realmente deletar o item selecionado?", function() {
-                $.gAjax.exec('DELETE', URL_API + 'proprietarios/' + usu_int_codigo, false, false, function(json) {
+                $.gAjax.exec('DELETE', URL_API + 'proprietarios/' + prp_int_codigo, false, false, function(json) {
                     if (json.status) {
                         filtrar();
                     }

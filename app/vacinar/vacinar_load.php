@@ -25,7 +25,7 @@ if (!empty($ani_var_nome)) {
 
 try {
     if ($type == 'C') {
-        $query = "SELECT count(1) FROM vw_vacina " . $filter->getWhere();
+        $query = "SELECT count(1) FROM animal_vacina anv left join animal ani on anv.ani_int_codigo = ani.ani_int_codigo " . $filter->getWhere();
         $param = $filter->getParam();
         $mysql->execute($query, $param);
         if ($mysql->fetch()) {
@@ -37,7 +37,10 @@ try {
         $filter->setOrder(array('ani_var_nome' => 'ASC'));
         $filter->setLimit($start, $rp);
 
-        $query = "SELECT ani_int_codigo, ani_var_nome, ani_var_vivo, ani_dec_peso, rac_var_nome FROM vw_animal " . $filter->getWhere();
+        $query = "SELECT anv.anv_int_codigo, ani.ani_var_nome, vac.vac_var_nome, anv.anv_dat_programacao, anv.anv_dti_aplicacao, usu.usu_var_nome FROM animal_vacina anv
+left join animal ani on anv.ani_int_codigo = ani.ani_int_codigo
+left join vacina vac on anv.vac_int_codigo = vac.vac_int_codigo
+left join usuario usu on anv.usu_int_codigo = usu.usu_int_codigo " . $filter->getWhere();
         $param = $filter->getParam();
 
         $mysql->execute($query, $param);
@@ -46,21 +49,23 @@ try {
             $html .= '<table class="table table-striped table-hover">';
             $html .= '<thead>';
             $html .= '<tr>';
-            $html .= '<th>Nome</th>';
-            $html .= '<th>Vivo</th>';
-            $html .= '<th>Peso</th>';
-            $html .= '<th>Raça</th>';
+            $html .= '<th>Animal</th>';
+            $html .= '<th>Vacina</th>';
+            $html .= '<th>Agendamento</th>';
+            $html .= '<th>Data da aplicação</th>';
+            $html .= '<th>Usuário</th>';
             $html .= '<th class="__acenter hidden-phone" width="100px">Actions</th>';
             $html .= '</tr>';
             $html .= '</thead>';
             $html .= '<tbody>';
             while ($mysql->fetch()) {
                 $class = ($_POST['p__selecionado'] == $mysql->res['ani_int_codigo']) ? 'success' : '';
-                $html .= '<tr id="' . $mysql->res['ani_int_codigo'] . '" class="linhaRegistro ' . $class . '">';
+                $html .= '<tr id="' . $mysql->res['anv_int_codigo'] . '" class="linhaRegistro ' . $class . '">';
                 $html .= '<td>' . $mysql->res['ani_var_nome'] . '</td>';
-                $html .= '<td>' . $mysql->res['ani_var_vivo'] . '</td>';
-                $html .= '<td>' . GF::numberFormat($mysql->res['ani_dec_peso'], false, false, false,3) . '</td>';
-                $html .= '<td>' . $mysql->res['rac_var_nome'] . '</td>';
+                $html .= '<td>' . $mysql->res['vac_var_nome'] . '</td>';
+                $html .= '<td>' . $mysql->res['anv_dat_programacao'] . '</td>';
+                $html .= '<td>' . $mysql->res['anv_dti_aplicacao'] . '</td>';
+                $html .= '<td>' . $mysql->res['usu_var_nome'] . '</td>';
 
                 //<editor-fold desc="Actions">
                     $html .= '<td class="__acenter hidden-phone acoes">';

@@ -19,7 +19,7 @@ $html .= getBotoesFiltro();
 $html .= getBotaoAdicionar();
 $html .= $form->close();
 //</editor-fold>
-
+$html .= $_POST['type'];
 $paginate = new GPaginate('usuario', 'usuario_load.php', SYS_PAGINACAO);
 $html .= $paginate->get();
 $html .= '</div>'; //divTable
@@ -87,3 +87,6 @@ $footer->show();
         });
     });
 </script>
+<?php
+
+?>

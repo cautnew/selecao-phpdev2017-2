@@ -2,13 +2,23 @@
 $form = new GForm();
 $conn = new GDbMysql();
 
+//Função que percorre todo o resultado de uma query e o retorna em uma array unidimensional
+function prepArray( $res )
+{
+    $arr = array();
+    while( $res->fetch() )
+        $arr[ $res->res[ 0 ] ] = $res->res[ 1 ];
+
+    return $arr;
+}
+
 //<editor-fold desc="Header">
 $title = '<span class="acaoTitulo"></span>';
 $tools = '<a id="f__btn_voltar"><i class="fa fa-arrow-left font-blue-steel"></i> <span class="hidden-phone font-blue-steel bold uppercase">Voltar</span></a>';
 $htmlForm .= getWidgetHeader($title, $tools);
 //</editor-fold>
 //<editor-fold desc="Formulário">
-$htmlForm .= $form->open('form', 'form-vertical form');
+$htmlForm .= $form->open('form', 'form-vertical form', 'post', '_self', '', true);
 $htmlForm .= $form->addInput('hidden', 'acao', false, array('value' => 'ins', 'class' => 'acao'), false, false, false);
 $htmlForm .= $form->addInput('hidden', 'ani_int_codigo', false, array('value' => ''), false, false, false);
 $htmlForm .= $form->addInput('text', 'ani_var_nome', 'Nome*', array('maxlength' => '50', 'validate' => 'required'));
@@ -17,23 +27,25 @@ $htmlForm .= $form->addSelect('ani_cha_vivo', array('S' => 'Sim', 'N' => 'Não')
 $htmlForm .= $form->addInput('text', 'ani_dec_peso', 'Peso*', array('maxlength' => '100', 'validate' => 'required'));
 //$htmlForm .= $form->addInput('text', 'rac_int_codigo', 'Raça*', array('maxlength' => '100', 'validate' => 'required'));
 
-$conn->execute( "SELECT rac_int_codigo, rac_var_nome FROM `SELECAO_PHPDEV2017_2`.`RACA`;" );
+$conn->execute( "SELECT rac_int_codigo, rac_var_nome FROM raca;" );
 
-$raca = array();
+$htmlForm .= $form->addSelect('rac_int_codigo', prepArray( $conn ), '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
-while( $conn->fetch() )
-    $raca[ $conn->res[ 0 ] ] = $conn->res[ 1 ];
+$conn->execute( "SELECT prp_int_codigo, prp_var_nome FROM proprietario;" );
 
-$htmlForm .= $form->addSelect('rac_int_codigo', $raca, '', 'Raça*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
+$htmlForm .= $form->addSelect('prp_int_codigo', prepArray( $conn ), '', 'Proprietário*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
 
-$conn->execute( "SELECT prp_int_codigo, prp_var_nome FROM `SELECAO_PHPDEV2017_2`.`PROPRIETARIO`;" );
+$htmlForm .= $form->addInput('file', 'ani_img_perfil', 'Imagem do animal', null);
 
-$prp = array();
-
-while( $conn->fetch() )
-    $prp[ $conn->res[ 0 ] ] = $conn->res[ 1 ];
-
-$htmlForm .= $form->addSelect('prp_int_codigo', $prp, '', 'Proprietário*', array('validate' => 'required'), false, false, true, '', 'Selecione...');
+$htmlForm .= "<p>Imagem atual: </p>";
+if( file_exists('../img/' . ) )
+{
+    $htmlForm .= "<img src=\"../img/" .  . ".jpg\" width=\"200\">";
+}
+else
+{
+    $htmlForm .= "Nenhum arquivo foi adicionado.";
+}
 
 $htmlForm .= '<div class="form-actions">';
 $htmlForm .= getBotoesAcao(true);

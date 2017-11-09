@@ -10,7 +10,7 @@ class AnimalVacinaDao {
         $ret = array();
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("SELECT anv_int_codigo,ani_int_codigo,vac_int_codigo,anv_dat_programacao,anv_dti_aplicacao,usu_int_codigo FROM vw_animal_vacina WHERE anv_int_codigo = ? ", array("i", $animalVacina->getAnv_int_codigo()), true, MYSQL_ASSOC);
+            $mysql->execute("SELECT anv_int_codigo,ani_int_codigo,vac_int_codigo,anv_dat_programacao,anv_dti_aplicacao,usu_int_codigo FROM animal_vacina WHERE anv_int_codigo = ? ", array("i", $animalVacina->getAnv_int_codigo()), true, MYSQL_ASSOC);
             if ($mysql->fetch()) {
                 $ret = $mysql->res;
             }
@@ -28,7 +28,7 @@ class AnimalVacinaDao {
         $param = array("iissi",$animalVacina->getAnimal()->getAni_int_codigo(),$animalVacina->getVacina()->getVac_int_codigo(),$animalVacina->getAnv_dat_programacao(),$animalVacina->getAnv_dti_aplicacao(),$animalVacina->getUsuario()->getUsu_int_codigo());
         try{
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_vacina_ins(?,?,?,?,?, @p_status, @p_msg, @p_insert_id);", $param, false);
+            $mysql->execute("CALL sp_animalvacina_aplica(?,?,?,?,?, @p_status, @p_msg, @p_insert_id);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg, @p_insert_id");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;
@@ -69,7 +69,7 @@ class AnimalVacinaDao {
         $param = array("i",$animalVacina->getAnv_int_codigo());
         try {
             $mysql = new GDbMysql();
-            $mysql->execute("CALL sp_animal_vacina_del(?, @p_status, @p_msg);", $param, false);
+            $mysql->execute("CALL sp_animalvacina_del(?, @p_status, @p_msg);", $param, false);
             $mysql->execute("SELECT @p_status, @p_msg");
             $mysql->fetch();
             $return["status"] = ($mysql->res[0]) ? true : false;

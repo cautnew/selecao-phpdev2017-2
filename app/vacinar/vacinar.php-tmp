@@ -12,7 +12,7 @@ $html .= '<div id="divTable" class="row">';
 $html .= getWidgetHeader();
 //<editor-fold desc="Formulário de Filtro">
 $html .= $form->open('filter', 'form-inline filterForm');
-$html .= $form->addInput('text', 'p__vac_var_nome', false, array('placeholder' => 'Nome', 'class' => 'sepV_b m-wrap small'), false, false, false);
+$html .= $form->addInput('text', 'p__vac_var_nome', false, array('placeholder' => 'Nome do animal', 'class' => 'sepV_b m-wrap small'), false, false, false);
 
 $html .= getBotoesFiltro();
 $html .= getBotaoAdicionar();
@@ -39,7 +39,7 @@ $footer->show();
     var pagLoad = 'vacinar_load.php';
 
     function filtrar(page) {
-        animalLoad('', '', '', $('#filter').serializeObject(), page);
+        vacinarLoad('', '', '', $('#filter').serializeObject(), page);
         return false;
     }
 
@@ -71,7 +71,7 @@ $footer->show();
             scrollTop();
             selectLine(ani_int_codigo);
 
-            loadForm(URL_API + 'vacinars/' + ani_int_codigo, function(json) {
+            loadForm(URL_API + 'animalVacina/' + ani_int_codigo, function(json) {
                 $('#ani_dec_peso').val(numberFormat(json.ani_dec_peso,3));
                 showForm('divForm', 'upd', 'Editar');
             });
@@ -80,7 +80,7 @@ $footer->show();
             var ani_int_codigo = $(this).parents('tr.linhaRegistro').attr('id');
 
             $.gDisplay.showYN("Quer realmente deletar o item selecionado?", function() {
-                $.gAjax.exec('DELETE', URL_API + 'vacinars/' + ani_int_codigo, false, false, function(json) {
+                $.gAjax.exec('DELETE', URL_API + 'animalVacina/' + ani_int_codigo, false, false, function(json) {
                     if (json.status) {
                         filtrar();
                     }

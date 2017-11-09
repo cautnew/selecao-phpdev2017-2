@@ -15,10 +15,10 @@ $start = (($page - 1) * $rp);
 //-------------------------------- Filtros -----------------------------------//
 $filter = new GFilter();
 
-$usu_var_nome = $_POST['p__prp_var_nome'];
+$prp_var_nome = $_POST['p__prp_var_nome'];
 
-if (!empty($usu_var_nome)) {
-    $filter->addFilter('AND', 'prp_var_nome', 'LIKE', 's', '%' . str_replace(' ', '%', $usu_var_nome) . '%');
+if (!empty($prp_var_nome)) {
+    $filter->addFilter('AND', 'prp_var_nome', 'LIKE', 's', '%' . str_replace(' ', '%', $prp_var_nome) . '%');
 }
 
 //-------------------------------- Filtros -----------------------------------//
@@ -38,8 +38,8 @@ try {
         $filter->setLimit($start, $rp);
 
         $query = "SELECT prp_int_codigo, prp_var_nome, prp_var_email, prp_var_tel FROM proprietario " . $filter->getWhere();
-        $param = $filter->getParam();
 
+        $param = $filter->getParam();
         $mysql->execute($query, $param);
 
         if ($mysql->numRows() > 0) {

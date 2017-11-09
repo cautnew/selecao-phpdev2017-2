@@ -11,8 +11,8 @@ $htmlForm .= $form->open('form', 'form-vertical form');
 $htmlForm .= $form->addInput('hidden', 'acao', false, array('value' => 'ins', 'class' => 'acao'), false, false, false);
 $htmlForm .= $form->addInput('hidden', 'prp_int_codigo', false, array('value' => ''), false, false, false);
 $htmlForm .= $form->addInput('text', 'prp_var_nome', 'Nome*', array('maxlength' => '50', 'validate' => 'required'));
-$htmlForm .= $form->addInput('email', 'prp_var_email', 'Email*', array('maxlength' => '100', 'validate' => 'required;email'));
-$htmlForm .= $form->addInput('text', 'prp_var_tel', 'Telefone*', array('maxlength' => '100', 'validate' => 'required'));
+$htmlForm .= $form->addInput('text', 'prp_var_email', 'Email*', array('maxlength' => '100', 'validate' => 'required;email'));
+$htmlForm .= $form->addInput('text', 'prp_var_tel', 'Telefone*', array('maxlength' => '15', 'validate' => 'required'));
 
 $htmlForm .= '<div class="form-actions">';
 $htmlForm .= getBotoesAcao(true);
@@ -30,8 +30,13 @@ echo $htmlForm;
             var prp_int_codigo = $('#prp_int_codigo').val();
             $('#p__selecionado').val();
             if ($('#form').gValidate()) {
-                var method = ($('#acao').val() == 'ins') ? 'POST' : 'PUT';
-                var endpoint = ($('#acao').val() == 'ins') ? URL_API + 'usuarios' : URL_API + 'usuarios/' + prp_int_codigo;
+                if($('#acao').val() == 'ins')
+                { var method = 'POST';
+                  var endpoint = URL_API + 'proprietarios';}
+                else
+                { var method = 'PUT';
+                  var endpoint = URL_API + 'proprietarios/' + prp_int_codigo; }
+ 
                 $.gAjax.exec(method, endpoint, $('#form').serializeArray(), false, function(json) {
                     if (json.status) {
                         showList(true);

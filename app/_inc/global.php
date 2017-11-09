@@ -2,6 +2,9 @@
 
 session_start();
 
+if( !isset( $_SESSION[ 'LOG_INT_CODIGO' ] ) )
+{ header( 'Location: login.php' ); }
+
 //Definição das constantes de URL e ROOT
     if (!defined('__DIR__')) {
        define('__DIR__', dirname(__FILE__));
@@ -18,7 +21,7 @@ session_start();
             }
         }
     }
-    define('URL_SYS', 'http://' . $_SERVER['SERVER_NAME'] . "/" . $complementoPasta);
+    define('URL_SYS', 'http://' . $_SERVER['SERVER_NAME'] . /*"/"*/"/simplesvet/app/" . $complementoPasta);
     define('ROOT_SYS', str_replace('_inc', '', dirname(__FILE__)));
 // --
 

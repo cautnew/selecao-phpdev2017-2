@@ -36,7 +36,8 @@
                         jQuery.gDisplay.loadStart('html');
                 },
                 error: function(json) {
-                    var msg = "Error loading page...";
+                    var msg = "Error loading page... ";
+                    console.log( json );
                     if(json.responseJSON !== undefined){
                         msg = json.responseJSON.msg;
                     }

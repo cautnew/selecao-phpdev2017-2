@@ -1,5 +1,5 @@
 <?php
-define('SERVER', 'simplesvet.mysql.dbaas.com.br');
+define('SERVER', 'D');
 define('MYSQL_HOST', 'simplesvet.mysql.dbaas.com.br');
 define('MYSQL_PORT', '3306');
 define('MYSQL_USER', 'simplesvet');
