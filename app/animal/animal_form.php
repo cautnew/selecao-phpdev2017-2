@@ -38,14 +38,7 @@ $htmlForm .= $form->addSelect('prp_int_codigo', prepArray( $conn ), '', 'Proprie
 $htmlForm .= $form->addInput('file', 'ani_img_perfil', 'Imagem do animal', null);
 
 $htmlForm .= "<p>Imagem atual: </p>";
-if( file_exists('../img/' ) )
-{
-    $htmlForm .= "<img src=\"../img/" .  . ".jpg\" width=\"200\">";
-}
-else
-{
-    $htmlForm .= "Nenhum arquivo foi adicionado.";
-}
+$htmlForm .= "<img id=\"ani_img_foto\" width=\"150\">";
 
 $htmlForm .= '<div class="form-actions">';
 $htmlForm .= getBotoesAcao(true);
@@ -74,6 +67,7 @@ echo $htmlForm;
             }
             return false;
         });
+        $('#ani_img_foto').attr( 'src', "../img/" + $('#ani_int_codigo').val() );
 
         $('#f__btn_cancelar, #f__btn_voltar').click(function() {
             showList();
